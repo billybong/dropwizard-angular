@@ -1,0 +1,4 @@
+prefix: Ubercoolers
+
+http:
+  rootPath: /api/*

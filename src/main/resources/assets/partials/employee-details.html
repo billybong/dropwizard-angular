@@ -1,0 +1,16 @@
+<div>
+    <p>
+        <label>Name:</label>
+        <input type="text" name="name" ng-model="employee.name" required>
+    </p>
+    <p>
+        <label>Years worked:</label>
+        <input type="text" name="yearsWorked" ng-model="employee.yearsWorked" required>
+    </p>
+    <p>
+        <label>Skillset</label>
+        <input type="text" name="skill" ng-model="employee.skill">
+    </p>
+    <br>
+    <button ng-click="update(employee)">Update</button>
+</div>

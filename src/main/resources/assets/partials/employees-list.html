@@ -1,0 +1,16 @@
+<div>
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Worked</th>
+            <th>Expertize</th>
+        </tr>
+        <tr ng-repeat="employee in employees">
+            <td><a href="/#employees/{{employee.id}}">{{employee.name}}</a></td>
+            <td>{{employee.yearsWorked}}</td>
+            <td>{{employee.skill}}</td>
+        </tr>
+        </thead>
+    </table>
+</div>
