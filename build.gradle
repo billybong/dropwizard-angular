@@ -16,3 +16,5 @@ dependencies{
 run {
     args 'server', 'src/dist/conf/config.yml'
 }
+
+task stage(dependsOn: ['clean', 'installApp'])
