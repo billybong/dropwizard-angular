@@ -1,8 +1,20 @@
 apply plugin: 'application'
 apply plugin: 'java'
 apply plugin: 'idea'
+apply plugin: 'gradle-one-jar'
 
 mainClassName = "se.com.eyc.employeecatalog.CatalogService"
+
+// Add Gradle OneJar Plugin, see https://github.com/rholder/gradle-one-jar
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.github.rholder:gradle-one-jar:1.0.3'
+    }
+}
 
 repositories{
 	mavenCentral()
@@ -17,4 +29,14 @@ run {
     args 'server', 'src/dist/conf/config.yml'
 }
 
-task stage(dependsOn: ['clean', 'installApp'])
+// Configure the oneJar task
+task oneJar(type: OneJar) {
+    mainClass = mainClassName
+}
+
+//The one that Heroku runs on commit
+task stage(dependsOn: ['clean', 'oneJar'])
+
+artifacts {
+    oneJar
+}

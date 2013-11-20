@@ -1,1 +1,1 @@
-web: build/install/dropwizard-angular/bin/dropwizard-angular server build/install/dropwizard-angular/conf/config.yml
+web: java $JAVA_OPTS -Ddw.http.port=$PORT -Ddw.http.adminPort=$PORT -jar build/libs/dropwizard-angular-standalone.jar server src/dist/conf/config.yml
