@@ -14,7 +14,7 @@ dependencies{
 
 //fatjar packaging
 jar {
-    def baseName = project.name
+    baseName project.name + "-deploy"
     def deps = configurations.runtime
     def depClasses = { deps.collect { it.isDirectory() ? it : zipTree(it) } }
     from(depClasses) {
@@ -26,4 +26,4 @@ jar {
 }
 
 //The one that Heroku runs on commit
-task stage(dependsOn: ['jar'])
+task stage(dependsOn: ['clean', 'jar'])
