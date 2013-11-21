@@ -2,11 +2,10 @@ dropwizard-angular
 ==================
 
 Silly project for playing around with a simple CRUD app using Dropwizard and AngularJS
-Bundled as an application using Gradle install plugin.
+Bundled as an application using the maven shade plugin.
 
-You can start the DropWizard server through "gradlew run", or if you prefer to package it,
-then simply run "gradlew installApp" to build. You dont need either Maven or Gradle to build, just Java.
-If you used installApp, then start with:
+Build with:
+mvn clean package
 
-cd /build/install/dropwizard-angular/bin/
-dropwizard-angular server ../conf/config.yml
+Then run with:
+java -jar target/fatjar.jar server src/dist/conf/config.yml
