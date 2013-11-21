@@ -1,46 +1,29 @@
-apply plugin: 'application'
 apply plugin: 'java'
 apply plugin: 'idea'
-apply plugin: 'gradle-one-jar'
 
-mainClassName = "se.com.eyc.employeecatalog.CatalogService"
-
-// Add Gradle OneJar Plugin, see https://github.com/rholder/gradle-one-jar
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'com.github.rholder:gradle-one-jar:1.0.3'
-    }
-}
-
-ext {
-    dropwizardVersion = '0.6.2'
-}
+def mainClassName = "se.com.eyc.employeecatalog.CatalogService"
 
 repositories{
 	mavenCentral()
 }
 
 dependencies{
-	compile 'com.yammer.dropwizard:dropwizard-core:' + dropwizardVersion,
+	compile 'com.yammer.dropwizard:dropwizard-core:0.6.2',
             'org.projectlombok:lombok:1.12.2'
 }
 
-run {
-    args 'server', 'src/dist/conf/config.yml'
-}
-
-// Configure the oneJar task
-task oneJar(type: OneJar) {
-    mainClass = mainClassName
+//fatjar packaging
+jar {
+    def baseName = project.name
+    def deps = configurations.runtime
+    def depClasses = { deps.collect { it.isDirectory() ? it : zipTree(it) } }
+    from(depClasses) {
+        exclude 'META-INF/*.RSA', 'META-INF/*.SF','META-INF/*.DSA', 'about.html'
+    }
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
 }
 
 //The one that Heroku runs on commit
-task stage(dependsOn: ['clean', 'oneJar'])
-
-artifacts {
-    oneJar
-}
+task stage(dependsOn: ['jar'])
