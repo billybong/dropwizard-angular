@@ -8,14 +8,17 @@ repositories{
 }
 
 dependencies{
-	compile 'com.yammer.dropwizard:dropwizard-core:0.6.2',
-            'org.projectlombok:lombok:1.12.2'
+	compile('com.yammer.dropwizard:dropwizard-core:0.6.2'){
+        exclude module: 'javax.servlet'
+    }
+
+    compile('org.projectlombok:lombok:1.12.2')
 }
 
 //fatjar packaging
 jar {
     baseName project.name + "-deploy"
-    def deps = configurations.runtime
+    def deps = configurations.compile
     def depClasses = { deps.collect { it.isDirectory() ? it : zipTree(it) } }
     from(depClasses) {
         exclude 'META-INF/*.RSA', 'META-INF/*.SF','META-INF/*.DSA', 'about.html'
