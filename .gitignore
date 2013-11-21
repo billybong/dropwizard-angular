@@ -11,3 +11,6 @@
 
 # Gradle build
 build
+
+# Maven build
+target
